@@ -1,3 +1,5 @@
+#NOTE: this is an updated version for windows
+#      tested in windows10 + ros2 (humble)
 cmake_minimum_required(VERSION 3.9.5)
 project(rplidar_ros)
 
@@ -20,7 +22,8 @@ FILE(GLOB RPLIDAR_SDK_SRC
 )
 else()
 FILE(GLOB RPLIDAR_SDK_SRC
-  "${RPLIDAR_SDK_PATH}/src/arch/linux/*.cpp"
+  #"${RPLIDAR_SDK_PATH}/src/arch/linux/*.cpp" # change linux to win32  <---------------
+  "${RPLIDAR_SDK_PATH}/src/arch/win32/*.cpp"
   "${RPLIDAR_SDK_PATH}/src/hal/*.cpp"
   "${RPLIDAR_SDK_PATH}/src/*.cpp"
 )
@@ -49,6 +52,10 @@ add_library(rplidar_composition_node SHARED
   src/rplidar_node.cpp
   ${RPLIDAR_SDK_SRC}
 )
+
+# add the below line to cope with DLL export in windows, for windows platform <---------------
+target_compile_definitions(rplidar_composition_node PRIVATE RPLIDAR_ROS_DLL=1)  
+
 ament_target_dependencies(rplidar_composition_node ${req_deps})
 rclcpp_components_register_nodes(rplidar_composition_node "rplidar_ros::rplidar_node")
 
