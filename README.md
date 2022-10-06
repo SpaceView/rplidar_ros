@@ -1,3 +1,8 @@
+NOTE: this repository is forked from https://github.com/allenh1/rplidar_ros
+      I updated this for windows10 + ros2 humble
+      
+----------------------------------------------------------------      
+
 RPLIDAR ROS 2 Package
 =====================================================================
 
